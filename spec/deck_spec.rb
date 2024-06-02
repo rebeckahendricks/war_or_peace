@@ -7,7 +7,7 @@ RSpec.configure do |config|
 end
 
 RSpec.describe Deck do
-  fit 'exists' do
+  it 'exists' do
     card1 = Card.new(:diamond, 'Queen', 12)
     card2 = Card.new(:spade, 'Jack', 11)
     deck = Deck.new([card1, card2])
@@ -50,8 +50,7 @@ RSpec.describe Deck do
     card4 = Card.new(:club, 'King', 13)
     deck = Deck.new([card1, card2, card3, card4])
 
-    deck.remove_card
-
+    expect(deck.remove_card).to eq(card1)
     expect(deck.cards).to eq([card2, card3, card4])
   end
 

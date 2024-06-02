@@ -21,7 +21,6 @@ class Deck
 
   def remove_card
     @cards.shift
-    @cards.map(&:to_s)
   end
 
   def add_card(card)
