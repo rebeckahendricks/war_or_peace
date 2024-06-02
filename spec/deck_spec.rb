@@ -58,10 +58,22 @@ RSpec.describe Deck do
     card1 = Card.new(:diamond, '5', 5)
     card2 = Card.new(:spade, 'Jack', 11)
     card3 = Card.new(:heart, 'Queen', 12)
-    card4 = Card.new(:club, 'King', 13)
     deck = Deck.new([card1, card2, card3])
 
+    card4 = Card.new(:club, 'King', 13)
     deck.add_card(card4)
+
     expect(deck.cards).to eq([card1, card2, card3, card4])
+  end
+
+  it 'can determine the rank of a card at a given index' do
+    card1 = Card.new(:diamond, '5', 5)
+    card2 = Card.new(:spade, 'Jack', 11)
+    card3 = Card.new(:heart, 'Queen', 12)
+    deck = Deck.new([card1, card2, card3])
+
+    expect(deck.rank_of_card_at(0)).to eq(5)
+    expect(deck.rank_of_card_at(1)).to eq(11)
+    expect(deck.rank_of_card_at(2)).to eq(12)
   end
 end
