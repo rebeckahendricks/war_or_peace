@@ -130,7 +130,7 @@ RSpec.describe Turn do
 
     it 'can determine that there is no turn winner' do
       winner = turn.winner
-      expect(winner).to eq('No Winner')
+      expect(winner).to eq(nil)
     end
 
     it 'has no cards in spoils_of_war pile' do

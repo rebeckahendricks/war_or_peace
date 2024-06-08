@@ -14,13 +14,30 @@ class Turn
   end
 
   def type
-    if @player1.deck.rank_of_card_at(0) != @player2.deck.rank_of_card_at(0)
-      :basic
-    elsif @player1.deck.rank_of_card_at(2) == @player2.deck.rank_of_card_at(2)
-      :mutually_assured_destruction
-    else
-      :war
-    end
+    return :invalid if not_enough_cards?
+    return :basic if basic?
+    return :war if war?
+    return :mutually_assured_destruction if mutually_assured_destruction?
+
+    :invalid
+  end
+
+  def basic?
+    @player1.deck.rank_of_card_at(0) != @player2.deck.rank_of_card_at(0)
+  end
+
+  def war?
+    @player1.deck.rank_of_card_at(0) == @player2.deck.rank_of_card_at(0) &&
+      @player1.deck.rank_of_card_at(2) != @player2.deck.rank_of_card_at(2)
+  end
+
+  def mutually_assured_destruction?
+    @player1.deck.rank_of_card_at(0) == @player2.deck.rank_of_card_at(0) &&
+      @player1.deck.rank_of_card_at(2) == @player2.deck.rank_of_card_at(2)
+  end
+
+  def not_enough_cards?
+    @player1.deck.cards.size < 3 || @player2.deck.cards.size < 3
   end
 
   def winner
@@ -29,8 +46,6 @@ class Turn
       compare_cards_at(0)
     when :war
       compare_cards_at(2)
-    else
-      'No Winner'
     end
   end
 
@@ -47,7 +62,7 @@ class Turn
   end
 
   def award_spoils(winner)
-    return unless @type != :mutually_assured_destruction
+    return if @type == :mutually_assured_destruction
 
     winner.deck.cards.concat(@spoils_of_war)
     @spoils_of_war = []
